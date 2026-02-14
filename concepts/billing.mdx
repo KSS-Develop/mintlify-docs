@@ -1,0 +1,67 @@
+---
+title: "Billing & Plans"
+description: "Subscription plans, usage limits, and feature gating"
+---
+
+IA-ERP uses a subscription-based billing model with tiered plans and optional add-ons. Each company has a subscription that determines its access level and usage limits.
+
+## Plans
+
+Plans define the features and limits available to a company. Use the plans endpoint to list available options:
+
+```bash
+GET /api/v1/plans/list
+```
+
+Each plan includes:
+- **DTE limits** - Maximum DTEs per month
+- **User limits** - Maximum users per company
+- **Feature flags** - Which modules are available (accounting, inventory, etc.)
+- **Storage** - Certificate and document storage limits
+
+## Subscription lifecycle
+
+1. **Subscribe** to a plan via MercadoPago pre-approval
+2. **Active** subscription unlocks features according to the plan
+3. **Usage tracking** monitors DTE emissions and other metered resources
+4. **Upgrade/downgrade** to change plans mid-cycle
+
+### Subscribing
+
+```bash
+POST /api/v1/billing/subscribe
+{
+  "plan_id": "pro",
+  "payment_method": "mercadopago"
+}
+```
+
+### Checking subscription status
+
+```bash
+GET /api/v1/billing/subscription
+```
+
+Returns the current plan, billing cycle, usage counters, and next payment date.
+
+### Checking usage
+
+```bash
+GET /api/v1/billing/usage
+```
+
+Returns current period usage against plan limits (DTEs emitted, users active, etc.).
+
+## Add-ons
+
+Add-ons extend a plan's capabilities without upgrading:
+
+```bash
+GET /api/v1/billing/addons
+```
+
+Examples: extra DTE quota, additional users, premium integrations.
+
+## Feature gating
+
+API endpoints check the active subscription before processing. If a feature is not included in the current plan, the endpoint returns HTTP 403 with details about which plan is required.

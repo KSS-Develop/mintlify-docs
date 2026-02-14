@@ -1,0 +1,91 @@
+---
+title: "Authentication"
+description: "JWT bearer tokens, API keys, and multi-company access control"
+---
+
+IA-ERP supports two authentication methods: **JWT Bearer tokens** for interactive users and **API Keys** for machine-to-machine integrations.
+
+## JWT Bearer Token
+
+Obtain a token by calling the login endpoint:
+
+```bash
+curl -X POST https://backend-production-244de.up.railway.app/api/v1/usuarios/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@company.cl", "password": "secret"}'
+```
+
+Include the token in the `Authorization` header:
+
+```bash
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+```
+
+### Token contents
+
+The JWT payload includes:
+- `user_id` - The authenticated user ID
+- `company_id` - The currently active company
+- `role` - The user's role within the active company
+
+### Multi-company support
+
+A single user can belong to multiple companies. The login response includes the list of companies the user has access to. The token is scoped to one company at a time.
+
+To switch the active company:
+
+```bash
+curl -X POST https://backend-production-244de.up.railway.app/api/v1/usuarios/switch-company \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIs..." \
+  -H "Content-Type: application/json" \
+  -d '{"company_id": 2}'
+```
+
+This returns a new token scoped to the selected company.
+
+## API Key
+
+For server-to-server or automated integrations, use an API key instead of JWT. API keys are created per-company through the admin panel or API.
+
+```bash
+curl https://backend-production-244de.up.railway.app/api/v1/dashboard/stats \
+  -H "X-API-Key: your-api-key-here"
+```
+
+API keys are scoped to a single company and bypass the login flow entirely.
+
+### Creating an API key
+
+```bash
+curl -X POST https://backend-production-244de.up.railway.app/api/v1/admin/companies/{company_id}/api-keys \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIs..." \
+  -H "Content-Type: application/json" \
+  -d '{"name": "My Integration"}'
+```
+
+## Roles
+
+| Role | Description |
+|------|-------------|
+| `admin` | Full access including company configuration and user management |
+| `contador` | Access to all financial, accounting, and tax endpoints |
+| `vendedor` | Access to contacts, products, quotes, and DTE emission |
+| `readonly` | Read-only access to all data |
+
+## Error responses
+
+Authentication failures return HTTP 401:
+
+```json
+{
+  "detail": "Invalid credentials"
+}
+```
+
+Authorization failures (insufficient role) return HTTP 403:
+
+```json
+{
+  "detail": "Insufficient permissions"
+}
+```

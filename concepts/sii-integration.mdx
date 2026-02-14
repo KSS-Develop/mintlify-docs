@@ -1,0 +1,133 @@
+---
+title: "SII Integration"
+description: "DTE lifecycle, folio management, and received documents"
+---
+
+IA-ERP integrates directly with Chile's Servicio de Impuestos Internos (SII) for electronic tax document (DTE) management. This guide explains the complete lifecycle.
+
+## DTE Lifecycle
+
+```
+Emit Request → XML Generation → Digital Signing → SII Upload → SII Response
+```
+
+### 1. Emission
+
+Call the emit endpoint with the document type, recipient, and line items:
+
+```bash
+POST /api/v1/dte/emitir
+{
+  "tipo_dte": 34,
+  "receptor": { "rut": "66666666-6", ... },
+  "detalle": [{ "nombre": "Servicio", "cantidad": 1, "precio": 100000 }]
+}
+```
+
+### 2. XML generation and signing
+
+IA-ERP automatically:
+- Generates the SII-compliant XML document
+- Assigns the next available folio from the CAF range
+- Signs the document with the company's digital certificate
+- Creates the SII envelope (sobre)
+
+### 3. Upload to SII
+
+The signed envelope is uploaded to SII's web service. The response includes a `track_id` for status tracking.
+
+### 4. SII response
+
+SII processes the document asynchronously. Check status with:
+
+```bash
+GET /api/v1/dte/{tipo}/{folio}/estado-avanzado
+```
+
+Possible states: `pending`, `accepted`, `rejected`, `reparo`.
+
+## Supported DTE types
+
+| Code | Type | Description |
+|------|------|-------------|
+| 34 | Factura Exenta | Tax-exempt invoice |
+| 56 | Nota de Debito | Debit note (corrections that increase amount) |
+| 61 | Nota de Credito | Credit note (corrections that decrease amount) |
+
+## Folio Management (CAF)
+
+Folios are pre-authorized number ranges from SII. Each DTE type requires its own folio range.
+
+### Check folio status
+
+```bash
+GET /api/v1/folios/status
+```
+
+Returns available folios per DTE type, with alerts for low stock.
+
+### Request new folios
+
+```bash
+POST /api/v1/folios/solicitar
+{
+  "tipo_dte": 34,
+  "cantidad": 100
+}
+```
+
+<Warning>
+SII rejects new folio requests if there are unused folios for the same DTE type. Use the diagnostics endpoint to check before requesting.
+</Warning>
+
+### Diagnostics
+
+```bash
+GET /api/v1/folios/diagnostico/{tipo_dte}
+```
+
+Returns detailed information about folio ranges, usage, and expiration dates.
+
+## Received Documents
+
+IA-ERP can sync documents received from suppliers directly from SII:
+
+```bash
+POST /api/v1/recibidos/sync
+{
+  "periodo": "2025-01"
+}
+```
+
+### Processing received documents
+
+For each received document, you can:
+
+1. **View details** - `GET /api/v1/recibidos/{dte_id}`
+2. **Send acknowledgment** (acuse de recibo) - `POST /api/v1/recibidos/{dte_id}/acuse`
+3. **Register commercial events** - `POST /api/v1/recibidos/{dte_id}/registrar-evento`
+4. **Check SII events** - `GET /api/v1/recibidos/{dte_id}/eventos`
+
+## SII Environments
+
+IA-ERP supports both SII environments:
+
+| Environment | Host | Use |
+|-------------|------|-----|
+| Certificacion | maullin.sii.cl | Testing and development |
+| Produccion | palena.sii.cl | Live tax documents |
+
+<Warning>
+CAF folios are environment-specific. Production CAFs (IDK=300) cannot be used in certification, and vice versa.
+</Warning>
+
+Configure the environment per company:
+
+```bash
+PUT /api/v1/admin/companies/{company_id}/ambiente
+{
+  "ambiente": 1
+}
+```
+
+Where `0` = Certificacion, `1` = Produccion.

@@ -1,33 +1,93 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: "API Reference"
+description: "Complete reference for the IA-ERP REST API"
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Base URL
 
-## Welcome
+All API endpoints are available at:
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+```
+https://backend-production-244de.up.railway.app/api/v1
+```
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All endpoints (except login) require authentication via one of:
+
+| Method | Header | Use case |
+|--------|--------|----------|
+| JWT Bearer | `Authorization: Bearer <token>` | Interactive users |
+| API Key | `X-API-Key: <key>` | Server-to-server integrations |
+
+See the [Authentication guide](/authentication) for details on obtaining credentials.
+
+## Request format
+
+- All request bodies use JSON (`Content-Type: application/json`)
+- Path parameters are indicated with `{param}` notation
+- Query parameters use standard URL encoding
+
+## Response format
+
+Successful responses return the resource directly:
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+{
+  "id": 1,
+  "tipo_dte": 34,
+  "folio": 123,
+  ...
+}
 ```
+
+List endpoints return arrays with pagination metadata:
+
+```json
+{
+  "items": [...],
+  "total": 150,
+  "page": 1,
+  "size": 20
+}
+```
+
+## Error format
+
+Errors return appropriate HTTP status codes with a detail message:
+
+```json
+{
+  "detail": "Description of what went wrong"
+}
+```
+
+| Status | Meaning |
+|--------|---------|
+| 400 | Bad request - invalid parameters |
+| 401 | Unauthorized - missing or invalid token |
+| 403 | Forbidden - insufficient permissions or plan limits |
+| 404 | Not found |
+| 422 | Validation error - check request body |
+| 429 | Rate limited |
+| 500 | Server error |
+
+## Rate limits
+
+API requests are rate-limited per user/API key. Current limits:
+
+- **Standard endpoints**: 60 requests/minute
+- **DTE emission**: 10 requests/minute
+- **SII sync operations**: 5 requests/minute
+
+Rate limit headers are included in responses:
+
+```
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 58
+X-RateLimit-Reset: 1706000000
+```
+
+## Interactive playground
+
+Each endpoint page below includes an interactive playground. Enter your Bearer token in the authorization field to send live requests directly from the documentation.

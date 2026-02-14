@@ -1,80 +1,113 @@
 ---
 title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+description: "Authenticate and emit your first DTE in 5 minutes"
 ---
 
-## Get started in three steps
+## Step 1: Get your credentials
 
-Get your documentation site running locally and make your first customization.
+Log in with your email and password to obtain a JWT access token.
 
-### Step 1: Set up your local environment
+```bash
+curl -X POST https://backend-production-244de.up.railway.app/api/v1/usuarios/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "your-email@company.cl",
+    "password": "your-password"
+  }'
+```
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
+Response:
 
-### Step 2: Deploy your changes
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIs...",
+  "token_type": "bearer",
+  "user": {
+    "id": 1,
+    "email": "your-email@company.cl",
+    "companies": [
+      { "id": 1, "rut": "76123456-7", "razon_social": "Mi Empresa SpA" }
+    ]
+  }
+}
+```
 
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+<Note>
+If your user has access to multiple companies, the token is scoped to the first company. Use the [Switch Company](/api-reference/endpoint/usuarios/post-usuarios-switch-company) endpoint to change.
+</Note>
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+## Step 2: Use the token
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+Include the token as a Bearer header in all subsequent requests.
 
-### Step 3: Go live
+```bash
+curl https://backend-production-244de.up.railway.app/api/v1/dashboard/stats \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIs..."
+```
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+## Step 3: Emit your first DTE
+
+Emit a Factura Exenta Electronica (type 34):
+
+```bash
+curl -X POST https://backend-production-244de.up.railway.app/api/v1/dte/emitir \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIs..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "tipo_dte": 34,
+    "receptor": {
+      "rut": "66666666-6",
+      "razon_social": "Cliente Ejemplo SpA",
+      "giro": "Comercio al por menor",
+      "direccion": "Av. Providencia 1234",
+      "comuna": "Providencia"
+    },
+    "detalle": [
+      {
+        "nombre": "Servicio de consultoria",
+        "cantidad": 1,
+        "precio": 100000,
+        "exento": true
+      }
+    ]
+  }'
+```
+
+Response:
+
+```json
+{
+  "tipo_dte": 34,
+  "folio": 123,
+  "fecha": "2025-01-15",
+  "monto_total": 100000,
+  "estado_sii": "pending",
+  "track_id": "987654321"
+}
+```
+
+## Step 4: Check DTE status
+
+The DTE is signed and uploaded to SII asynchronously. Check its status:
+
+```bash
+curl https://backend-production-244de.up.railway.app/api/v1/dte/34/123/estado-avanzado \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIs..."
+```
 
 ## Next steps
 
-Now that you have your docs running, explore these key features:
-
 <CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card title="Authentication" icon="lock" href="/authentication">
+    Learn about API keys, multi-company support, and role-based access.
+  </Card>
+  <Card title="SII Integration" icon="file-invoice" href="/concepts/sii-integration">
+    Understand the full DTE lifecycle including folios and received documents.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/introduction">
+    Browse all 150+ endpoints.
+  </Card>
+  <Card title="Multi-tenancy" icon="building" href="/concepts/multi-tenancy">
+    Manage multiple companies from a single user account.
+  </Card>
 </CardGroup>
-
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>

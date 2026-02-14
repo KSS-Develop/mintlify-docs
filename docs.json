@@ -1,122 +1,349 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "IA-ERP API",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#2563EB",
+    "light": "#3B82F6",
+    "dark": "#1D4ED8"
   },
   "favicon": "/favicon.svg",
-  "navigation": {
-    "tabs": [
-      {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "Getting started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
   },
-  "navbar": {
-    "links": [
+  "tabs": [
+    {
+      "id": "guides",
+      "name": "Guides"
+    },
+    {
+      "id": "api-reference",
+      "name": "API Reference"
+    }
+  ],
+  "anchors": [],
+  "navigation": {
+    "guides": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "group": "Getting Started",
+        "pages": [
+          "index",
+          "quickstart",
+          "authentication"
+        ]
+      },
+      {
+        "group": "Concepts",
+        "pages": [
+          "concepts/multi-tenancy",
+          "concepts/billing",
+          "concepts/sii-integration"
+        ]
       }
     ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+    "api-reference": [
+      {
+        "group": "Overview",
+        "pages": [
+          "api-reference/introduction"
+        ]
+      },
+      {
+        "group": "Authentication",
+        "pages": [
+          "api-reference/endpoint/usuarios/post-usuarios-login",
+          "api-reference/endpoint/usuarios/post-usuarios-switch-company",
+          "api-reference/endpoint/usuarios/post-usuarios-",
+          "api-reference/endpoint/usuarios/post-usuarios-by-id-companies",
+          "api-reference/endpoint/usuarios/get-usuarios-list",
+          "api-reference/endpoint/usuarios/put-usuarios-by-id",
+          "api-reference/endpoint/usuarios/post-usuarios-by-id-change-password"
+        ]
+      },
+      {
+        "group": "Tax Documents (DTE)",
+        "pages": [
+          "api-reference/endpoint/dte/post-dte-emitir",
+          "api-reference/endpoint/dte/get-dte-by-id-by-id",
+          "api-reference/endpoint/dte/get-dte-list",
+          "api-reference/endpoint/dte/post-dte-by-id-by-id-pdf",
+          "api-reference/endpoint/dte/post-dte-by-id-by-id-retry",
+          "api-reference/endpoint/dte/get-dte-by-id-by-id-estado-avanzado",
+          "api-reference/endpoint/dte/get-dte-by-id-by-id-estado-receptor",
+          "api-reference/endpoint/dte/post-dte-by-id-by-id-reenviar-correo"
+        ]
+      },
+      {
+        "group": "Boletas",
+        "pages": [
+          "api-reference/endpoint/boletas/post-boletas-emitir",
+          "api-reference/endpoint/boletas/get-boletas-list",
+          "api-reference/endpoint/boletas/get-boletas-resumen-by-id"
+        ]
+      },
+      {
+        "group": "Dispatch Guides",
+        "pages": [
+          "api-reference/endpoint/guias-despacho/post-guias-emitir",
+          "api-reference/endpoint/guias-despacho/get-guias-list"
+        ]
+      },
+      {
+        "group": "Received Documents",
+        "pages": [
+          "api-reference/endpoint/recibidos/get-recibidos-list",
+          "api-reference/endpoint/recibidos/get-recibidos-by-id",
+          "api-reference/endpoint/recibidos/post-recibidos-sync",
+          "api-reference/endpoint/recibidos/post-recibidos-by-id-acuse",
+          "api-reference/endpoint/recibidos/get-recibidos-resumen-by-id",
+          "api-reference/endpoint/recibidos/post-recibidos-by-id-registrar-evento",
+          "api-reference/endpoint/recibidos/get-recibidos-by-id-eventos"
+        ]
+      },
+      {
+        "group": "Folios (CAF)",
+        "pages": [
+          "api-reference/endpoint/folios/get-folios-status",
+          "api-reference/endpoint/folios/post-folios-solicitar",
+          "api-reference/endpoint/folios/post-folios-debug-solicitar",
+          "api-reference/endpoint/folios/post-folios-invalidar-by-id",
+          "api-reference/endpoint/folios/get-folios-diagnostico-by-id",
+          "api-reference/endpoint/folios/post-folios-reactivar-by-id",
+          "api-reference/endpoint/folios/post-folios-repair-expiry"
+        ]
+      },
+      {
+        "group": "DTE Exchange",
+        "pages": [
+          "api-reference/endpoint/cesion/post-cesion-registrar",
+          "api-reference/endpoint/intercambio/post-intercambio-enviar"
+        ]
+      },
+      {
+        "group": "Contacts",
+        "pages": [
+          "api-reference/endpoint/contactos/get-contactos-list",
+          "api-reference/endpoint/contactos/get-contactos-buscar-rut-by-id",
+          "api-reference/endpoint/contactos/get-contactos-by-id",
+          "api-reference/endpoint/contactos/put-contactos-by-id",
+          "api-reference/endpoint/contactos/delete-contactos-by-id",
+          "api-reference/endpoint/contactos/post-contactos-"
+        ]
+      },
+      {
+        "group": "Products",
+        "pages": [
+          "api-reference/endpoint/productos/get-productos-list",
+          "api-reference/endpoint/productos/get-productos-by-id",
+          "api-reference/endpoint/productos/put-productos-by-id",
+          "api-reference/endpoint/productos/delete-productos-by-id",
+          "api-reference/endpoint/productos/post-productos-",
+          "api-reference/endpoint/productos/post-productos-by-id-stock"
+        ]
+      },
+      {
+        "group": "Quotes",
+        "pages": [
+          "api-reference/endpoint/cotizaciones/get-cotizaciones-resumen",
+          "api-reference/endpoint/cotizaciones/get-cotizaciones-list",
+          "api-reference/endpoint/cotizaciones/get-cotizaciones-by-id",
+          "api-reference/endpoint/cotizaciones/put-cotizaciones-by-id",
+          "api-reference/endpoint/cotizaciones/post-cotizaciones",
+          "api-reference/endpoint/cotizaciones/post-cotizaciones-by-id-estado",
+          "api-reference/endpoint/cotizaciones/post-cotizaciones-by-id-duplicar",
+          "api-reference/endpoint/cotizaciones/post-cotizaciones-by-id-convertir",
+          "api-reference/endpoint/cotizaciones/post-cotizaciones-by-id-facturada"
+        ]
+      },
+      {
+        "group": "Purchase Orders",
+        "pages": [
+          "api-reference/endpoint/ordenes-compra/get-ordenes-compra-list",
+          "api-reference/endpoint/ordenes-compra/get-ordenes-compra-by-id",
+          "api-reference/endpoint/ordenes-compra/put-ordenes-compra-by-id",
+          "api-reference/endpoint/ordenes-compra/post-ordenes-compra-"
+        ]
+      },
+      {
+        "group": "Accounts Receivable & Payable",
+        "pages": [
+          "api-reference/endpoint/cuentas/get-cuentas-cobrar",
+          "api-reference/endpoint/cuentas/post-cuentas-cobrar",
+          "api-reference/endpoint/cuentas/get-cuentas-cobrar-aging",
+          "api-reference/endpoint/cuentas/post-cuentas-cobrar-by-id-pago",
+          "api-reference/endpoint/cuentas/get-cuentas-pagar",
+          "api-reference/endpoint/cuentas/post-cuentas-pagar",
+          "api-reference/endpoint/cuentas/get-cuentas-pagar-aging",
+          "api-reference/endpoint/cuentas/post-cuentas-pagar-by-id-pago"
+        ]
+      },
+      {
+        "group": "Accounting",
+        "pages": [
+          "api-reference/endpoint/contabilidad/post-contabilidad-plan-cuentas-inicializar",
+          "api-reference/endpoint/contabilidad/get-contabilidad-plan-cuentas",
+          "api-reference/endpoint/contabilidad/post-contabilidad-asientos",
+          "api-reference/endpoint/contabilidad/get-contabilidad-libro-mayor-by-id",
+          "api-reference/endpoint/contabilidad/get-contabilidad-pre-balance",
+          "api-reference/endpoint/contabilidad/get-contabilidad-balance",
+          "api-reference/endpoint/contabilidad/get-contabilidad-resultados"
+        ]
+      },
+      {
+        "group": "Inventory",
+        "pages": [
+          "api-reference/endpoint/inventario/post-inventario-movimiento",
+          "api-reference/endpoint/inventario/get-inventario-kardex-by-id",
+          "api-reference/endpoint/inventario/get-inventario-valorizacion",
+          "api-reference/endpoint/inventario/get-inventario-resumen-by-id",
+          "api-reference/endpoint/inventario/get-inventario-bodegas",
+          "api-reference/endpoint/inventario/post-inventario-bodegas",
+          "api-reference/endpoint/inventario/put-inventario-bodegas-by-id",
+          "api-reference/endpoint/inventario/get-inventario-bodegas-stock",
+          "api-reference/endpoint/inventario/post-inventario-bodegas-transferir"
+        ]
+      },
+      {
+        "group": "Tax & Books",
+        "pages": [
+          "api-reference/endpoint/cuadratura/get-cuadratura",
+          "api-reference/endpoint/libros/get-libros-ventas-by-id",
+          "api-reference/endpoint/libros/get-libros-compras-by-id",
+          "api-reference/endpoint/libros/get-libros-f29-by-id",
+          "api-reference/endpoint/libros/put-libros-ppm",
+          "api-reference/endpoint/tributario/get-tributario-regimen",
+          "api-reference/endpoint/tributario/put-tributario-regimen",
+          "api-reference/endpoint/tributario/get-tributario-ppm-formula",
+          "api-reference/endpoint/tributario/get-tributario-renta-by-id",
+          "api-reference/endpoint/iva/get-iva-detalle-by-id",
+          "api-reference/endpoint/iva/get-iva-historial-by-id"
+        ]
+      },
+      {
+        "group": "Financial Analysis",
+        "pages": [
+          "api-reference/endpoint/flujo-caja/get-flujo-caja-proyeccion",
+          "api-reference/endpoint/flujo-caja/get-flujo-caja-detalle-by-id",
+          "api-reference/endpoint/rentabilidad/get-rentabilidad-clientes",
+          "api-reference/endpoint/rentabilidad/get-rentabilidad-ventas-by-id",
+          "api-reference/endpoint/rentabilidad/get-rentabilidad-ranking",
+          "api-reference/endpoint/cobranza/get-cobranza-aging",
+          "api-reference/endpoint/cobranza/get-cobranza-vencidas",
+          "api-reference/endpoint/cobranza/get-cobranza-resumen",
+          "api-reference/endpoint/cobranza/get-cobranza-morosos",
+          "api-reference/endpoint/presupuestos/post-presupuestos",
+          "api-reference/endpoint/presupuestos/get-presupuestos",
+          "api-reference/endpoint/presupuestos/get-presupuestos-ejecucion-by-id",
+          "api-reference/endpoint/presupuestos/get-presupuestos-variacion-by-id"
+        ]
+      },
+      {
+        "group": "Bank Reconciliation",
+        "pages": [
+          "api-reference/endpoint/conciliacion/post-conciliacion-movimientos",
+          "api-reference/endpoint/conciliacion/get-conciliacion-movimientos",
+          "api-reference/endpoint/conciliacion/post-conciliacion-automatica-by-id",
+          "api-reference/endpoint/conciliacion/post-conciliacion-manual",
+          "api-reference/endpoint/conciliacion/get-conciliacion-resumen-by-id"
+        ]
+      },
+      {
+        "group": "Cost Centers",
+        "pages": [
+          "api-reference/endpoint/centros-costo/get-centros-costo",
+          "api-reference/endpoint/centros-costo/post-centros-costo",
+          "api-reference/endpoint/centros-costo/put-centros-costo-by-id",
+          "api-reference/endpoint/centros-costo/post-centros-costo-asignacion",
+          "api-reference/endpoint/centros-costo/get-centros-costo-resumen",
+          "api-reference/endpoint/centros-costo/get-centros-costo-detalle-by-id"
+        ]
+      },
+      {
+        "group": "Reports",
+        "pages": [
+          "api-reference/endpoint/reportes/get-reportes-resumen-by-id",
+          "api-reference/endpoint/reportes/get-reportes-export-ventas-by-id",
+          "api-reference/endpoint/reportes/get-reportes-export-compras-by-id"
+        ]
+      },
+      {
+        "group": "Dashboard",
+        "pages": [
+          "api-reference/endpoint/dashboard/get-dashboard-company",
+          "api-reference/endpoint/dashboard/get-dashboard-stats"
+        ]
+      },
+      {
+        "group": "Economic Indicators",
+        "pages": [
+          "api-reference/endpoint/indicadores/get-indicadores-",
+          "api-reference/endpoint/indicadores/get-indicadores-convertir",
+          "api-reference/endpoint/indicadores/get-indicadores-historial-by-id-by-id"
+        ]
+      },
+      {
+        "group": "Notifications",
+        "pages": [
+          "api-reference/endpoint/notificaciones/get-notificaciones-",
+          "api-reference/endpoint/notificaciones/post-notificaciones-by-id-leer",
+          "api-reference/endpoint/notificaciones/post-notificaciones-leer-todas",
+          "api-reference/endpoint/notificaciones/get-notificaciones-webhooks",
+          "api-reference/endpoint/notificaciones/post-notificaciones-webhooks",
+          "api-reference/endpoint/notificaciones/delete-notificaciones-webhooks-by-id"
+        ]
+      },
+      {
+        "group": "Administration",
+        "pages": [
+          "api-reference/endpoint/admin/post-admin-companies",
+          "api-reference/endpoint/admin/post-admin-companies-by-id-api-keys",
+          "api-reference/endpoint/admin/post-admin-companies-by-id-certificates",
+          "api-reference/endpoint/admin/put-admin-companies-by-id-ambiente",
+          "api-reference/endpoint/giros/get-giros-list",
+          "api-reference/endpoint/giros/post-giros-",
+          "api-reference/endpoint/giros/put-giros-by-id",
+          "api-reference/endpoint/giros/delete-giros-by-id"
+        ]
+      },
+      {
+        "group": "MercadoPago",
+        "pages": [
+          "api-reference/endpoint/mercadopago/post-mercadopago-connect",
+          "api-reference/endpoint/mercadopago/post-mercadopago-callback",
+          "api-reference/endpoint/mercadopago/get-mercadopago-config",
+          "api-reference/endpoint/mercadopago/get-mercadopago-pagos",
+          "api-reference/endpoint/mercadopago/post-mercadopago-sync",
+          "api-reference/endpoint/mercadopago/get-mercadopago-status",
+          "api-reference/endpoint/mercadopago/post-mercadopago-webhook-register",
+          "api-reference/endpoint/mercadopago/delete-mercadopago-webhook-unregister",
+          "api-reference/endpoint/mercadopago-webhook/post-mercadopago-webhook"
+        ]
+      },
+      {
+        "group": "UX Helpers",
+        "pages": [
+          "api-reference/endpoint/ux-helpers/get-ux-resolver-receptor-by-id",
+          "api-reference/endpoint/ux-helpers/get-ux-ultimo-dte-by-id",
+          "api-reference/endpoint/ux-helpers/get-ux-productos-frecuentes-by-id",
+          "api-reference/endpoint/ux-helpers/get-ux-alertas-folios",
+          "api-reference/endpoint/ux-helpers/get-ux-dtes-pendientes",
+          "api-reference/endpoint/ux-helpers/post-ux-enriquecer-emails",
+          "api-reference/endpoint/ux-helpers/get-ux-detectar-duplicados",
+          "api-reference/endpoint/ux-helpers/get-ux-resumen-matutino",
+          "api-reference/endpoint/ux-helpers/get-ux-busqueda-global",
+          "api-reference/endpoint/ux-helpers/get-ux-calculadora-iva",
+          "api-reference/endpoint/ux-helpers/get-ux-estado-certificado",
+          "api-reference/endpoint/ux-helpers/get-ux-siguiente-folio"
+        ]
+      }
+    ]
+  },
+  "api": {
+    "baseUrl": "https://backend-production-244de.up.railway.app",
+    "auth": {
+      "method": "bearer"
     }
   },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
-  }
+  "openapi": "api-reference/openapi.json"
 }

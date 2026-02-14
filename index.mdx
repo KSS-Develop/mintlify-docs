@@ -1,97 +1,46 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "IA-ERP API Documentation"
+sidebarTitle: "Home"
+description: "Chilean SII-compliant electronic invoicing and full ERP API"
 ---
 
-## Setting up
+# Welcome to IA-ERP
 
-Get your documentation site up and running in minutes.
+IA-ERP is a comprehensive ERP platform for Chilean businesses, with native SII (Servicio de Impuestos Internos) integration for electronic invoicing, accounting, inventory, and financial management.
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
-
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Get up and running in 5 minutes. Authenticate and emit your first DTE.
   </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
+  <Card title="Authentication" icon="lock" href="/authentication">
+    JWT bearer tokens, API keys, and multi-company support.
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+  <Card title="API Reference" icon="code" href="/api-reference/introduction">
+    Complete reference for all 150+ endpoints across invoicing, accounting, inventory, and more.
   </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
+  <Card title="SII Integration" icon="file-invoice" href="/concepts/sii-integration">
+    Understand the DTE lifecycle: emission, signing, upload, and SII response.
   </Card>
-</Columns>
+</CardGroup>
 
-## Create beautiful pages
+## Core Capabilities
 
-Everything you need to create world-class documentation.
+| Module | Description |
+|--------|-------------|
+| **Tax Documents (DTE)** | Emit Facturas Exentas (T34), Notas de Debito (T56), Notas de Credito (T61) |
+| **Boletas & Dispatch Guides** | Boletas electronicas and Guias de Despacho |
+| **Received Documents** | Sync and manage DTEs received from suppliers via SII |
+| **Contacts & Products** | Full contact directory and product catalog with stock management |
+| **Accounting** | Chart of accounts, journal entries, general ledger, balance sheet, income statement |
+| **Inventory** | Multi-warehouse, transfers, Kardex, valuation |
+| **Financial Analysis** | Cash flow projections, budgets, profitability, collections aging |
+| **Bank Reconciliation** | Automatic and manual bank statement matching |
+| **Quotes & Purchase Orders** | Full quoting lifecycle with DTE conversion |
+| **Tax & Books** | Sales/purchases books, F29, VAT detail, tax regime simulation |
+| **MercadoPago** | Payment integration with automatic sync |
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+## Base URL
 
-## Need inspiration?
-
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+```
+https://backend-production-244de.up.railway.app/api/v1
+```

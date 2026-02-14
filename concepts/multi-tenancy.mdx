@@ -1,0 +1,54 @@
+---
+title: "Multi-tenancy"
+description: "One user, multiple companies - how IA-ERP handles multi-company access"
+---
+
+IA-ERP is a multi-tenant platform where a single user account can manage multiple companies. Each company has its own isolated data: DTEs, contacts, products, accounting, and configuration.
+
+## How it works
+
+1. **User registration** creates a user identity (email + password)
+2. **Company creation** sets up a new tenant with its own RUT, SII certificates, and data
+3. **Company assignment** links users to companies with specific roles
+4. **JWT scoping** ensures every API request operates within one company's context
+
+## Company switching
+
+When a user logs in, they receive a JWT scoped to their default company. To operate on a different company:
+
+```bash
+POST /api/v1/usuarios/switch-company
+{
+  "company_id": 2
+}
+```
+
+This returns a **new JWT** scoped to the requested company. The previous token remains valid for its original company until expiration.
+
+## Data isolation
+
+All API endpoints automatically filter data by the active company in the JWT. There is no way to access another company's data without switching companies first.
+
+| Resource | Isolation |
+|----------|-----------|
+| DTEs | Per company |
+| Contacts | Per company |
+| Products | Per company |
+| Accounting (chart of accounts, entries) | Per company |
+| Folios (CAF) | Per company |
+| SII certificates | Per company |
+| API keys | Per company |
+
+## User roles per company
+
+A user can have different roles in different companies. For example, `admin` in Company A but `readonly` in Company B.
+
+Roles are assigned when linking a user to a company:
+
+```bash
+POST /api/v1/usuarios/{user_id}/companies
+{
+  "company_id": 2,
+  "role": "contador"
+}
+```
