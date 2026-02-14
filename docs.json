@@ -321,6 +321,96 @@
         ]
       },
       {
+        "group": "Shipping",
+        "pages": [
+          "api-reference/endpoint/envios/post-envios-tarifas-calcular",
+          "api-reference/endpoint/envios/post-envios",
+          "api-reference/endpoint/envios/get-envios",
+          "api-reference/endpoint/envios/get-envios-by-id-tracking"
+        ]
+      },
+      {
+        "group": "Marketplace",
+        "pages": [
+          "api-reference/endpoint/marketplace/get-marketplace-platforms",
+          "api-reference/endpoint/marketplace/get-marketplace-configs",
+          "api-reference/endpoint/marketplace/post-marketplace-connect-by-id",
+          "api-reference/endpoint/marketplace/get-marketplace-config-by-id",
+          "api-reference/endpoint/marketplace/delete-marketplace-config-by-id",
+          "api-reference/endpoint/marketplace/get-marketplace-by-id-orders",
+          "api-reference/endpoint/marketplace/get-marketplace-by-id-orders-by-id",
+          "api-reference/endpoint/marketplace/get-marketplace-by-id-products",
+          "api-reference/endpoint/marketplace/get-marketplace-by-id-products-by-id",
+          "api-reference/endpoint/marketplace/get-marketplace-by-id-stats",
+          "api-reference/endpoint/marketplace/post-marketplace-by-id-sync",
+          "api-reference/endpoint/marketplace/get-marketplace-by-id-sync-logs"
+        ]
+      },
+      {
+        "group": "ML Shipping",
+        "pages": [
+          "api-reference/endpoint/ml-envios/get-ml-envios",
+          "api-reference/endpoint/ml-envios/get-ml-envios-stats",
+          "api-reference/endpoint/ml-envios/get-ml-envios-by-id",
+          "api-reference/endpoint/ml-envios/get-ml-envios-by-id-tracking",
+          "api-reference/endpoint/ml-envios/get-ml-envios-by-id-costs",
+          "api-reference/endpoint/ml-envios/post-ml-envios-sync"
+        ]
+      },
+      {
+        "group": "Plans",
+        "pages": [
+          "api-reference/endpoint/plans/get-plans",
+          "api-reference/endpoint/plans/get-plans-by-id",
+          "api-reference/endpoint/plans/get-plans-addons"
+        ]
+      },
+      {
+        "group": "Billing",
+        "pages": [
+          "api-reference/endpoint/billing/get-billing-subscription",
+          "api-reference/endpoint/billing/post-billing-subscribe",
+          "api-reference/endpoint/billing/post-billing-change-plan",
+          "api-reference/endpoint/billing/post-billing-cancel",
+          "api-reference/endpoint/billing/post-billing-reactivate",
+          "api-reference/endpoint/billing/get-billing-usage",
+          "api-reference/endpoint/billing/get-billing-addons",
+          "api-reference/endpoint/billing/post-billing-addons-by-id-activate",
+          "api-reference/endpoint/billing/post-billing-addons-by-id-deactivate",
+          "api-reference/endpoint/billing/get-billing-events",
+          "api-reference/endpoint/billing/get-billing-admin-subscriptions",
+          "api-reference/endpoint/billing/put-billing-admin-subscriptions-by-id-override",
+          "api-reference/endpoint/billing/get-billing-admin-metrics",
+          "api-reference/endpoint/billing/post-billing-webhook"
+        ]
+      },
+      {
+        "group": "Google OAuth",
+        "pages": [
+          "api-reference/endpoint/auth-google/post-auth-google"
+        ]
+      },
+      {
+        "group": "Audit Trail",
+        "pages": [
+          "api-reference/endpoint/audit/get-audit-logs",
+          "api-reference/endpoint/audit/get-audit-integrity"
+        ]
+      },
+      {
+        "group": "WebAuthn 2FA",
+        "pages": [
+          "api-reference/endpoint/webauthn/post-auth-webauthn-register-options",
+          "api-reference/endpoint/webauthn/post-auth-webauthn-register-verify",
+          "api-reference/endpoint/webauthn/post-auth-webauthn-authenticate-options",
+          "api-reference/endpoint/webauthn/post-auth-webauthn-authenticate-verify",
+          "api-reference/endpoint/webauthn/get-auth-webauthn-credentials",
+          "api-reference/endpoint/webauthn/delete-auth-webauthn-credentials-by-id",
+          "api-reference/endpoint/webauthn/post-auth-webauthn-enable",
+          "api-reference/endpoint/webauthn/post-auth-webauthn-disable"
+        ]
+      },
+      {
         "group": "UX Helpers",
         "pages": [
           "api-reference/endpoint/ux-helpers/get-ux-resolver-receptor-by-id",
