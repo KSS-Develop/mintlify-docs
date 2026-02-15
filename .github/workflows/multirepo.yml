@@ -1,0 +1,24 @@
+name: Aggregate Docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  multirepo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Mintlify Multirepo Action
+        uses: mintlify/multirepo-action@v1
+        with:
+          token: ${{ secrets.GH_PAT }}
+          repos: |
+            KSS-Develop/ia-erp:docs/backend
+            KSS-Develop/ia-erp-web:docs/web
+            KSS-Develop/ia-erp-mobile:docs/mobile
+            KSS-Develop/ia-erp-agent:docs/agent
+          base_repo: mintlify-docs
+          base_branch: main
